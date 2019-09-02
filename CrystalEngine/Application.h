@@ -1,9 +1,17 @@
 #pragma once
 #include "Engine/Core/Window.h"
+#include "Engine/Core/Environment.h"
+
 #include "vendor/glad/glad.h"
 
 #include "Engine/Graphics/Renderer2D.h"
 #include "Engine/Graphics/Renderable2D.h"
+
+#define CRYSTAL_APPLICATION(applicationClass) int main(int argc,char** argv) \
+												{\
+													applicationClass* app = new applicationClass({argc,argv});\
+													return app->Exec();\
+												}\
 
 namespace Crystal {
 	
@@ -23,7 +31,7 @@ namespace Crystal {
 			std::string m_Title;
 			glm::vec2 m_Size;
 			Core::Window::WindowFlags m_Flags;
-			
+			glm::vec4 m_BackgroundColor;
 		public:
 			Configuration();
 
@@ -33,19 +41,17 @@ namespace Crystal {
 			Configuration& SetSize(const glm::vec2& size);
 			const Core::Window::WindowFlags& GetFlags();
 			Configuration& SetFlags(const Core::Window::WindowFlags& flags);
+			const glm::vec4& GetBackgroundColor();
+			Configuration& SetBackgroundColor(const glm::vec4& color);
 		};
 	private:
-		Core::Window* m_pWindow;
-		Graphics::Renderer2D* m_pRenderer;
-		Configuration m_AppConfig;
-		Arguments m_Arguments;
 		SDL_Event m_pE;
 		bool m_ShouldQuit = false;
-
-		//TEMP:
-		Graphics::GL::Shader* m_pShader;
-		Graphics::Renderable2D* sprite1;
-		Graphics::Renderable2D* sprite2;
+	protected:
+		Core::Environment* m_pEnv;
+		Core::Window* m_pWindow;
+		Configuration m_AppConfig;
+		Arguments m_Arguments;
 
 	public:
 		Application(const Arguments& args, const Configuration& config = Configuration());
@@ -53,9 +59,16 @@ namespace Crystal {
 
 		int Exec();
 
+		Core::Environment* GetEnv() { return m_pEnv; }
+
+		/* GETTERS */
+		Crystal::Core::Window& GetWindow() { return *m_pWindow; }
+		Configuration& GetAppConfig() { return m_AppConfig; }
+		
+
 	private:
-		void update();
-		void draw();
+		virtual void update();
+		virtual void draw();
 	};
 
 }

@@ -8,6 +8,7 @@ namespace Crystal {
 		m_Title = "Untitled - Crystal Application";
 		m_Size = { 800,600 };
 		m_Flags = Core::Window::WindowFlags::Shown;
+		m_BackgroundColor = glm::vec4(0, 0, 0, 1);
 	}
 
 	std::string Application::Configuration::GetTitle()
@@ -44,7 +45,19 @@ namespace Crystal {
 		return *this;
 	}
 
-	Application::Application(const Arguments& args, const Configuration& config)
+	const glm::vec4& Application::Configuration::GetBackgroundColor()
+	{
+		return m_BackgroundColor;
+	}
+
+	Application::Configuration& Application::Configuration::SetBackgroundColor(const glm::vec4& color)
+	{
+		m_BackgroundColor = color;
+		glClearColor(color.r, color.g, color.b, color.a);
+		return *this;
+	}
+
+	Application::Application(const Application::Arguments& args, const Application::Configuration& config)
 		:m_Arguments(args),m_AppConfig(config)
 	{
 		if (SDL_Init(SDL_INIT_VIDEO) != 0)
@@ -55,13 +68,14 @@ namespace Crystal {
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 		m_pWindow = new Core::Window(m_AppConfig.GetTitle(), m_AppConfig.GetSize(), m_AppConfig.GetFlags());
-		glClearColor(0.8, 0.8, 0.8, 1);
+		glm::vec4 bgColor = m_AppConfig.GetBackgroundColor();
+		glClearColor(bgColor.r,bgColor.g,bgColor.b,bgColor.a);
 		glEnable(GL_DEPTH_TEST);
 		glClearDepth(1.0);
-		glViewport(0, 0, m_AppConfig.GetSize().x, m_AppConfig.GetSize().y);
+		glViewport(0, 0, m_AppConfig.GetSize().x, m_AppConfig.GetSize().y);		
 
-		m_pRenderer = new Graphics::Renderer2D(glm::ortho(0.0f,800.0f, 600.0f,0.0f,-100.0f,100.0f));
-		
+		m_pEnv = new Core::Environment();
+		m_pEnv->pInputManager = new Core::InputManager();
 	}
 
 	Application::~Application()
@@ -71,18 +85,6 @@ namespace Crystal {
 	int Application::Exec()
 	{
 		m_pWindow->Show();
-
-		// TEMPORARY TESTING CODE |BEGIN :
-		m_pShader = new Graphics::GL::Shader("TestShader","Shaders/");
-		m_pShader->AddAttribute("position");
-		m_pShader->AddAttribute("color");
-		m_pShader->Bind();
-		m_pShader->SetUniform("Projection", glm::ortho(0.0f, 800.0f, 600.0f, 0.0f, -100.0f, 100.0f));
-		m_pShader->Unbind();
-
-		sprite1 = new Graphics::Renderable2D{ glm::vec2(80, 80), glm::vec2(80, 80), glm::vec4(1, 1, 1, 1) };
-		sprite2 = new Graphics::Renderable2D{ glm::vec2(200, 200), glm::vec2(100, 100), glm::vec4(1, 1, 1, 1) };
-		// TEMPORARY TESTING CODE |END
 
 		while (!m_ShouldQuit) // TODO : Proper Application Loop
 		{
@@ -99,6 +101,12 @@ namespace Crystal {
 		case SDL_EventType::SDL_QUIT:
 			m_ShouldQuit = true;
 			break;
+		case SDL_EventType::SDL_KEYDOWN:
+			m_pEnv->pInputManager->DispatchKeyboard(Core::InputType::KeyDown, m_pE.key.keysym.scancode); // Maybe switch to scan code ?
+			break;
+		case SDL_EventType::SDL_KEYUP:
+			m_pEnv->pInputManager->DispatchKeyboard(Core::InputType::KeyUp, m_pE.key.keysym.scancode); // Maybe switch to scan code ?
+			break;
 		default:
 			break;
 		}
@@ -106,15 +114,6 @@ namespace Crystal {
 	void Application::draw()
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		// TEMPORARY TESTING CODE |BEGIN :
-		m_pShader->Bind();
-		m_pRenderer->Begin();
-		m_pRenderer->Push(sprite1);
-		m_pRenderer->Push(sprite2);
-		m_pRenderer->End();
-		m_pRenderer->Flush();
-		m_pShader->Unbind();
-		// TEMPORARY TESTING CODE |END
 		m_pWindow->SwapFrameBuffer();
 	}
 }

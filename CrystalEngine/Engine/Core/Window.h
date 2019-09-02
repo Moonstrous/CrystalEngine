@@ -26,6 +26,7 @@ namespace Crystal {
 			Window& Show() { SDL_ShowWindow(m_pWindow); return *this; }
 			Window& Hide() { SDL_HideWindow(m_pWindow); return *this; }
 
+			Window& Clear();
 			Window& SwapFrameBuffer() { SDL_GL_SwapWindow(m_pWindow); return *this; }
 
 			std::string GetTitle() { return m_Title; }

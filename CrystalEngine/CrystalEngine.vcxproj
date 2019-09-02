@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -92,6 +92,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)vendor\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -111,6 +112,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)vendor\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -132,6 +134,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)vendor\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -155,6 +158,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)vendor\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -169,7 +173,8 @@
   <ItemGroup>
     <ClInclude Include="..\..\include\glad\glad.h" />
     <ClInclude Include="Application.h" />
-    <ClInclude Include="Engine\Core\Pool.h" />
+    <ClInclude Include="Engine\Core\Environment.h" />
+    <ClInclude Include="Engine\Core\Input.h" />
     <ClInclude Include="Engine\Core\Window.h" />
     <ClInclude Include="Engine\Graphics\OpenGL\Buffer.h" />
     <ClInclude Include="Engine\Graphics\OpenGL\IndexBuffer.h" />
@@ -177,6 +182,7 @@
     <ClInclude Include="Engine\Graphics\OpenGL\VertexArray.h" />
     <ClInclude Include="Engine\Graphics\Renderable2D.h" />
     <ClInclude Include="Engine\Graphics\Renderer2D.h" />
+    <ClInclude Include="Engine\Graphics\Vertex.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="vendor\glad\glad.h" />
@@ -185,6 +191,7 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="CrystalEngine.cpp" />
+    <ClCompile Include="Engine\Core\Input.cpp" />
     <ClCompile Include="Engine\Core\Window.cpp" />
     <ClCompile Include="Engine\Graphics\OpenGL\Buffer.cpp" />
     <ClCompile Include="Engine\Graphics\OpenGL\IndexBuffer.cpp" />

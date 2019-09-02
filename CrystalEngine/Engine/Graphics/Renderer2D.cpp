@@ -64,9 +64,9 @@ namespace Crystal {
 			glBindBuffer(GL_ARRAY_BUFFER, m_VertexBufferID);
 			glBufferData(GL_ARRAY_BUFFER, MAX_BUFFER_SIZE, 0, GL_DYNAMIC_DRAW);
 			glEnableVertexAttribArray(VertexAttribs::Position);
-			glVertexAttribPointer(VertexAttribs::Position, 3, GL_FLOAT, GL_FALSE, VERTEX_SIZE, (const void*)offsetof(Vertex, x));
+			glVertexAttribPointer(VertexAttribs::Position, 3, GL_FLOAT, GL_FALSE, VERTEX_SIZE, (const void*)offsetof(Vertex, position));
 			glEnableVertexAttribArray(VertexAttribs::Color);
-			glVertexAttribPointer(VertexAttribs::Color,4,GL_FLOAT,GL_FALSE,VERTEX_SIZE,(const void*)offsetof(Vertex,r));
+			glVertexAttribPointer(VertexAttribs::Color,4,GL_FLOAT,GL_FALSE,VERTEX_SIZE,(const void*)offsetof(Vertex,color));
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 			GLuint indices[MAX_INDICES_SIZE];
