@@ -34,6 +34,7 @@
 namespace Crystal {
 	namespace Core {
 
+
 		enum InputType : char
 		{
 			KeyUp = 0,
@@ -42,13 +43,16 @@ namespace Crystal {
 			Modifier
 		};
 
+		using ActionCallback = std::function<void(InputType)>;
+		using AxisCallback = std::function<void(float)>;
+
 		struct Action
 		{
-			Action() : callbacks(new std::vector<std::function<void(InputType)>*>()) {}
+			Action() : callbacks(new std::vector<ActionCallback*>()) {}
 			std::string actionName;
 			int keycode;
-			std::vector<std::function<void(InputType)>*>* callbacks;
-			std::vector<std::function<void(InputType)>*>& GetCallbacks()
+			std::vector<ActionCallback*>* callbacks;
+			std::vector<ActionCallback*>& GetCallbacks()
 			{
 				return *callbacks;
 			}
@@ -56,12 +60,12 @@ namespace Crystal {
 
 		struct Axis
 		{
-			Axis() : callbacks(new std::vector<std::function<void(float)>*>()) {}
+			Axis() : callbacks(new std::vector<AxisCallback*>()) {}
 			std::string axisName;
 			std::unordered_map<int,float> axis;
 			float axisValue = 0.0f;
-			std::vector<std::function<void(float)>*>* callbacks;
-			std::vector<std::function<void(float)>*>& GetCallbacks()
+			std::vector<AxisCallback*>* callbacks;
+			std::vector<AxisCallback*>& GetCallbacks()
 			{
 				return *callbacks;
 			}
@@ -85,8 +89,8 @@ namespace Crystal {
 				}
 			} inputMap;
 
-			void OnAction(std::string actionName, std::function<void(InputType)>* callback);
-			void OnAxis(std::string axisName, std::function<void(float)>* callback);
+			void OnAction(std::string actionName, ActionCallback* callback);
+			void OnAxis(std::string axisName, AxisCallback* callback);
 
 		};
 
@@ -94,7 +98,6 @@ namespace Crystal {
 		{
 			glm::vec2 position;
 			bool lmbDown;
-			bool lmbUp;
 			float scrollDelta;
 		};
 
@@ -115,6 +118,8 @@ namespace Crystal {
 			InputContext& GetCurrentContext();
 			void DispatchKeyboard(InputType type, unsigned int keycode);
 			void SetMouseState(const MouseState& newMouseState);
+			void MouseMotion(const glm::vec2& newPosition);
+			void MouseButton(bool isDown);
 			// Poll-based Input :
 			bool IsKeyDown(int keycode);
 			const MouseState& GetMouseState();

@@ -88,12 +88,13 @@ namespace Crystal {
 
 		while (!m_ShouldQuit) // TODO : Proper Application Loop
 		{
+			applicationUpdate();
 			update();
 			draw();
 		}
 		return 1;
 	}
-	void Application::update()
+	void Application::applicationUpdate()
 	{
 		SDL_PollEvent(&m_pE);
 		switch (m_pE.type)
@@ -102,15 +103,37 @@ namespace Crystal {
 			m_ShouldQuit = true;
 			break;
 		case SDL_EventType::SDL_KEYDOWN:
-			m_pEnv->pInputManager->DispatchKeyboard(Core::InputType::KeyDown, m_pE.key.keysym.scancode); // Maybe switch to scan code ?
+			if (!m_pE.key.repeat)
+			{
+				m_pEnv->pInputManager->DispatchKeyboard(Core::InputType::KeyDown, m_pE.key.keysym.scancode); // Maybe switch to scan code ?
+			}
 			break;
 		case SDL_EventType::SDL_KEYUP:
-			m_pEnv->pInputManager->DispatchKeyboard(Core::InputType::KeyUp, m_pE.key.keysym.scancode); // Maybe switch to scan code ?
+			if (!m_pE.key.repeat)
+			{
+				m_pEnv->pInputManager->DispatchKeyboard(Core::InputType::KeyUp, m_pE.key.keysym.scancode); // Maybe switch to scan code ?
+			}
+			break;
+		case SDL_EventType::SDL_MOUSEMOTION:
+			m_pEnv->pInputManager->MouseMotion({ m_pE.motion.x, m_pE.motion.y });
+			break;
+		case SDL_EventType::SDL_MOUSEBUTTONDOWN:
+			m_pEnv->pInputManager->MouseButton(true);
+			break;
+		case SDL_EventType::SDL_MOUSEBUTTONUP:
+			m_pEnv->pInputManager->MouseButton(false);
+			break;
+		case SDL_EventType::SDL_MOUSEWHEEL:
 			break;
 		default:
 			break;
 		}
 	}
+
+	void Application::update()
+	{
+	}
+
 	void Application::draw()
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

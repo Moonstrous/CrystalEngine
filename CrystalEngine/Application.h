@@ -18,6 +18,7 @@ namespace Crystal {
 	class Application
 	{
 	public:
+
 		struct Arguments
 		{
 			Arguments(int argc,char** argv): Argc(argc),Argv(argv) {}
@@ -44,6 +45,7 @@ namespace Crystal {
 			const glm::vec4& GetBackgroundColor();
 			Configuration& SetBackgroundColor(const glm::vec4& color);
 		};
+
 	private:
 		SDL_Event m_pE;
 		bool m_ShouldQuit = false;
@@ -65,8 +67,9 @@ namespace Crystal {
 		Crystal::Core::Window& GetWindow() { return *m_pWindow; }
 		Configuration& GetAppConfig() { return m_AppConfig; }
 		
-
 	private:
+		void applicationUpdate();
+	protected:
 		virtual void update();
 		virtual void draw();
 	};

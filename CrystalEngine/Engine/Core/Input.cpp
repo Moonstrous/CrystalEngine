@@ -29,18 +29,18 @@ namespace Crystal {
 				if (action)
 				{
 					Action* actionValue = *action;
-					for (std::function<void(InputType)>* callback : actionValue->GetCallbacks())
+					for (ActionCallback* callback : actionValue->GetCallbacks())
 					{
-						(*callback)(type);
+						std::invoke(*callback,type);
 					}
 				}
 				std::optional<Axis*> axis = m_pCurrentInputContext->inputMap.GetAxisByKeycode(keycode);
 				if (axis)
 				{
 					Axis* axisValue = *axis;
-					for (std::function<void(float)>* callback : axisValue->GetCallbacks())
+					for (AxisCallback* callback : axisValue->GetCallbacks())
 					{
-						(*callback)(axisValue->axisValue);
+						std::invoke(*callback, axisValue->axisValue);
 					}
 				}
 			}
@@ -49,9 +49,20 @@ namespace Crystal {
 		{
 			m_MouseState = newMouseState;
 		}
+
+		void InputManager::MouseMotion(const glm::vec2& newPosition)
+		{
+			m_MouseState.position = newPosition;
+		}
+
+		void InputManager::MouseButton(bool isDown)
+		{
+			m_MouseState.lmbDown = isDown;
+		}
+
 		bool InputManager::IsKeyDown(int keycode)
 		{
-			return false;
+			return m_Keys[keycode];
 		}
 		const MouseState& InputManager::GetMouseState()
 		{
@@ -78,12 +89,12 @@ namespace Crystal {
 			}
 			return {};
 		}
-		void InputContext::OnAction(std::string actionName, std::function<void(InputType)>* callback)
+		void InputContext::OnAction(std::string actionName, ActionCallback* callback)
 		{
 			inputMap.actions.at(actionName)->callbacks->push_back(callback);
 		}
 
-		void InputContext::OnAxis(std::string axisName, std::function<void(float)>* callback)
+		void InputContext::OnAxis(std::string axisName, AxisCallback* callback)
 		{
 			inputMap.axis.at(axisName)->callbacks->push_back(callback);
 		}

@@ -33,7 +33,18 @@ namespace Crystal {
 			/* Getters */
 			const glm::vec2& GetPosition() const { return m_Position; }
 			const glm::vec2& GetSize() const { return m_Size; }
+			glm::vec4 GetColor() const { return m_Color; }
 			Vertex* GetVertices() { return m_pVertices; }
+			/* Setters */
+			Renderable2D& SetPosition(const glm::vec2& newPos);
+			Renderable2D& SetSize(const glm::vec2& newSize);
+			Renderable2D& SetColor(glm::vec4 val);
+			/* Transformations */
+			Renderable2D& Translate(const glm::vec2& deltaPos);
+			Renderable2D& Scale(const glm::vec2& multiplier);
+
+		private:
+			void updateVertices();
 
 		};
 
