@@ -70,7 +70,7 @@ namespace Crystal {
 	private:
 		void applicationUpdate();
 	protected:
-		virtual void update();
+		virtual void update(double dt);
 		virtual void draw();
 	};
 

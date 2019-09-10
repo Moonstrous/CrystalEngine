@@ -113,8 +113,8 @@ namespace Crystal {
 			~InputManager() { delete m_pCurrentInputContext; }
 			//void RegisterInputListener(IInputListener* inputListener);
 			InputManager& RegisterInputContext(InputContext* inputContext);
-			InputManager& SwitchInputContext(std::string contextName);
-			InputContext& GetContext(std::string contextName);
+			InputManager& SwitchInputContext(const std::string& contextName);
+			InputContext& GetContext(const std::string& contextName);
 			InputContext& GetCurrentContext();
 			void DispatchKeyboard(InputType type, unsigned int keycode);
 			void SetMouseState(const MouseState& newMouseState);

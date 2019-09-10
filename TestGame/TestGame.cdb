@@ -1,0 +1,11 @@
+{
+	"Grass":{
+		"Resource Type":"Texture",
+		"Resource Path":"Resources/Textures/Grass.png",
+		"Resource Meta-data":{
+			"Width":1280,
+			"Height":720,
+			"Clipping":"Linear"
+		}
+	}
+}

@@ -171,10 +171,15 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\include\glad\glad.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Engine\Core\Environment.h" />
+    <ClInclude Include="Engine\Core\ResourceManager\Factory.h" />
     <ClInclude Include="Engine\Core\Input.h" />
+    <ClInclude Include="Engine\Core\ResourceManager\Resource.h" />
+    <ClInclude Include="Engine\Core\ResourceManager\ResourceManager.h" />
+    <ClInclude Include="Engine\Core\ResourceManager\Resources\TextureFactory.h" />
+    <ClInclude Include="Engine\Core\ResourceManager\Resources\TextureResource.h" />
+    <ClInclude Include="Engine\Core\Timer.h" />
     <ClInclude Include="Engine\Core\Window.h" />
     <ClInclude Include="Engine\Graphics\OpenGL\Buffer.h" />
     <ClInclude Include="Engine\Graphics\OpenGL\IndexBuffer.h" />
@@ -182,16 +187,22 @@
     <ClInclude Include="Engine\Graphics\OpenGL\VertexArray.h" />
     <ClInclude Include="Engine\Graphics\Renderable2D.h" />
     <ClInclude Include="Engine\Graphics\Renderer2D.h" />
+    <ClInclude Include="Engine\Graphics\OpenGL\Texture.h" />
     <ClInclude Include="Engine\Graphics\Vertex.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="vendor\glad\glad.h" />
     <ClInclude Include="vendor\KHR\khrplatform.h" />
+    <ClInclude Include="vendor\nlohmann\json.hpp" />
+    <ClInclude Include="vendor\stb\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="CrystalEngine.cpp" />
     <ClCompile Include="Engine\Core\Input.cpp" />
+    <ClCompile Include="Engine\Core\ResourceManager\ResourceManager.cpp" />
+    <ClCompile Include="Engine\Core\ResourceManager\Resources\TextureFactory.cpp" />
+    <ClCompile Include="Engine\Core\ResourceManager\Resources\TextureResource.cpp" />
     <ClCompile Include="Engine\Core\Window.cpp" />
     <ClCompile Include="Engine\Graphics\OpenGL\Buffer.cpp" />
     <ClCompile Include="Engine\Graphics\OpenGL\IndexBuffer.cpp" />
@@ -199,6 +210,7 @@
     <ClCompile Include="Engine\Graphics\OpenGL\VertexArray.cpp" />
     <ClCompile Include="Engine\Graphics\Renderable2D.cpp" />
     <ClCompile Include="Engine\Graphics\Renderer2D.cpp" />
+    <ClCompile Include="Engine\Graphics\OpenGL\Texture.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

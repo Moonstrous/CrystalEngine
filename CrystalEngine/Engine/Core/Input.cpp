@@ -7,12 +7,12 @@ namespace Crystal {
 			m_pInputContextes.emplace(inputContext->contextName,inputContext);
 			return *this;
 		}
-		InputManager& InputManager::SwitchInputContext(std::string contextName)
+		InputManager& InputManager::SwitchInputContext(const std::string& contextName)
 		{
 			m_pCurrentInputContext = m_pInputContextes.at(contextName);
 			return *this;
 		}
-		InputContext& InputManager::GetContext(std::string contextName)
+		InputContext& InputManager::GetContext(const std::string& contextName)
 		{
 			return *(m_pInputContextes.at(contextName));
 		}

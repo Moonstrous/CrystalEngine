@@ -1,8 +1,11 @@
 #include "Application.h"
 
+#include <chrono>
 
 namespace Crystal {
 
+	const static double MS_PER_UPDATE = 0.016;
+	
 	Application::Configuration::Configuration()
 	{
 		m_Title = "Untitled - Crystal Application";
@@ -85,11 +88,20 @@ namespace Crystal {
 	int Application::Exec()
 	{
 		m_pWindow->Show();
-
-		while (!m_ShouldQuit) // TODO : Proper Application Loop
+		std::chrono::high_resolution_clock::time_point prev = std::chrono::high_resolution_clock::now();
+		double lag = 0.0;
+		while (!m_ShouldQuit)
 		{
+			std::chrono::high_resolution_clock::time_point curr = std::chrono::high_resolution_clock::now();
+			double elapsed = std::chrono::duration<double>(curr - prev).count();
+			prev = curr;
+			lag += elapsed;
 			applicationUpdate();
-			update();
+			while (lag >= MS_PER_UPDATE)
+			{
+				update(elapsed);
+				lag -= MS_PER_UPDATE;
+			}
 			draw();
 		}
 		return 1;
@@ -130,7 +142,7 @@ namespace Crystal {
 		}
 	}
 
-	void Application::update()
+	void Application::update(double dt)
 	{
 	}
 

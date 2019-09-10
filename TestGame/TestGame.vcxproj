@@ -170,6 +170,9 @@
       <Project>{cfb1aa9f-6905-45e3-bbf1-00606e7b9801}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="TestGame.cdb" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -14,7 +14,7 @@ public:
 		using namespace Crystal::Core;
 		Action* jump = new Action();
 		jump->actionName = "Jump";
-		jump->keycode = SDL_SCANCODE_A;
+		jump->keycode = SDL_SCANCODE_SPACE;
 		InputContext* movementContext = new InputContext();
 		movementContext->contextName = "Movement";
 		movementContext->inputMap.RegisterAction(jump);
@@ -33,11 +33,15 @@ public:
 		m_Shader.Unbind();
 	}
 
-	virtual void update() override
+	virtual void update(double dt) override
 	{
 		if (m_pEnv->pInputManager->IsKeyDown(SDL_SCANCODE_D))
 		{
-			m_pSprite1->Translate({ 0,1 });
+			m_pSprite1->Translate({ 25 * dt,0 });
+		}
+		if (m_pEnv->pInputManager->IsKeyDown(SDL_SCANCODE_A))
+		{
+			m_pSprite1->Translate({ -25 * dt,0 });
 		}
 	}
 
